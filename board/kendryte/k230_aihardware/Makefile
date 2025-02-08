@@ -28,4 +28,8 @@ EXTRA_CFLAGS += -I$(BOARD_COMMON_DIR)
 
 obj-y += board.o
 
-obj-$(CONFIG_K230_LPDDR4_2667) += lpddr4_init_32_swap_2667.o
+
+obj-$(CONFIG_K230_LPDDR4_2667) += gen_canmv_lpddr4_2667.lex.o
+
+$(obj)/gen_canmv_lpddr4_2667.lex.c: $(src)/../k230_canmv_01studio/canmv_01studio_lpddr4_init_32_swap_2667.c  $(BOARD_COMMON_DIR)/ddr.sh
+	$(Q)($(BOARD_COMMON_DIR)/ddr.sh $< $@ 0x50000 0x53fff 0x54000 0x5433d || exit 1)
