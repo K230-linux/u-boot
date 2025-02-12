@@ -135,6 +135,8 @@ void spl_device_disable(void);
 int spl_load_image_type(void);
 #endif
 
+int k230_gpio(char opt, int pin, char *value);
+
 u32 detect_ddr_size(void);
 
 #endif

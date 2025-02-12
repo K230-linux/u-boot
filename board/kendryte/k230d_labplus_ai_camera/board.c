@@ -36,6 +36,10 @@ int board_early_init_f(void) {
 
 #ifdef CONFIG_BOARD_LATE_INIT
 int board_late_init(void) {
+  // close cam_led
+  char val = 0;
+  k230_gpio('o', 8, &val);
+
   return 0;
 }
 #endif
