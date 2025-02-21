@@ -1,0 +1,135 @@
+/* Copyright (c) 2023, Canaan Bright Sight Co., Ltd
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 1. Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+/dts-v1/;
+#include <dt-bindings/pinctrl/k230-pinctrl.h>
+
+#define BANK_VOLTAGE_IO0_IO1	 K230_MSC_1V8  // FIXED
+#define BANK_VOLTAGE_IO2_IO13	 K230_MSC_3V3
+#define BANK_VOLTAGE_IO14_IO25	 K230_MSC_3V3
+#define BANK_VOLTAGE_IO26_IO37	 K230_MSC_3V3
+#define BANK_VOLTAGE_IO38_IO49	 K230_MSC_3V3
+#define BANK_VOLTAGE_IO50_IO61	 K230_MSC_3V3
+#define BANK_VOLTAGE_IO62_IO63	 K230_MSC_3V3
+#include "k230.dtsi"
+
+/ {
+	model = "kendryte k230 labplus 1956";
+	compatible = "kendryte,k230_labplus_1956";
+
+	memory@0 {
+		device_type = "memory";
+		reg = <
+				0x0 0 0x0 0x40000000
+			  >;
+	};
+};
+
+&mmc0 {
+	1-8-v;
+	status = "okay";
+};
+
+&iomux {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pins>;
+
+//	Please pay attention to the bank voltage! will damage the chip.
+	pins: iomux_pins {
+		u-boot,dm-pre-reloc;
+		pinctrl-single,pins = <
+
+		(IO0 ) ( 1<<SEL | 0<<SL | BANK_VOLTAGE_IO0_IO1 <<MSC | 1<<IE | 0<<OE | 1<<PU | 1<<PD | 2<<DS | 1<<ST )	// BOOT0
+		(IO1 ) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO0_IO1 <<MSC | 1<<IE | 0<<OE | 1<<PU | 1<<PD | 2<<DS | 1<<ST )	// GPIO1
+
+		(IO2 ) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO3 ) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO4 ) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO5 ) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO6 ) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO7 ) ( 2<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 7<<DS | 1<<ST )	// I2C4_SCL
+		(IO8 ) ( 2<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 7<<DS | 1<<ST )	// I2C4_SDA
+		(IO9 ) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO10) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 1<<IE | 1<<OE | 0<<PU | 0<<PD | 7<<DS | 1<<ST )	// GPIO10
+		(IO11) ( 3<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 7<<DS | 1<<ST ) // IIC2_SCL
+		(IO12) ( 3<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 7<<DS | 1<<ST ) // IIC2_SDA
+		(IO13) ( 1<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 0<<IE | 1<<OE | 0<<PU | 1<<PD | 4<<DS | 1<<ST ) // M_CLK1
+
+		(IO14) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO14_IO25<<MSC | 0<<IE | 1<<OE | 0<<PU | 1<<PD | 7<<DS | 1<<ST ) // CAM2_RST
+		(IO15) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO14_IO25<<MSC | 1<<IE | 0<<OE | 0<<PU | 0<<PD | 4<<DS | 1<<ST )	// ACC_INT
+		(IO16) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO14_IO25<<MSC | 1<<IE | 0<<OE | 0<<PU | 0<<PD | 4<<DS | 1<<ST )	// PRESS_INT
+		(IO17) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO14_IO25<<MSC | 1<<IE | 0<<OE | 0<<PU | 0<<PD | 4<<DS | 1<<ST )	// LIGHT_INT
+		(IO18) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO14_IO25<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO19) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO14_IO25<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO20) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO14_IO25<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO21) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO14_IO25<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO22) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO14_IO25<<MSC | 0<<IE | 1<<OE | 0<<PU | 1<<PD | 7<<DS | 1<<ST )	// LCD_RST
+		(IO23) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO14_IO25<<MSC | 1<<IE | 0<<OE | 0<<PU | 0<<PD | 4<<DS | 1<<ST )	// TP_INT
+		(IO24) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO14_IO25<<MSC | 0<<IE | 1<<OE | 0<<PU | 1<<PD | 7<<DS | 1<<ST )	// TP_RST
+		(IO25) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO14_IO25<<MSC | 0<<IE | 1<<OE | 0<<PU | 1<<PD | 7<<DS | 1<<ST )	// LCD_BL_EN
+
+		(IO26) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO26_IO37<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO27) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO26_IO37<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO28) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO26_IO37<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO29) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO26_IO37<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO30) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO26_IO37<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO31) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO26_IO37<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO32) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO26_IO37<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO33) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO26_IO37<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO34) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO26_IO37<<MSC |	0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO35) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO26_IO37<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO36) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO26_IO37<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO37) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO26_IO37<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+
+		(IO38) ( 1<<SEL | 0<<SL | BANK_VOLTAGE_IO38_IO49<<MSC | 0<<IE | 1<<OE | 0<<PU | 0<<PD | 7<<DS | 1<<ST )	// UART0_TXD
+		(IO39) ( 1<<SEL | 0<<SL | BANK_VOLTAGE_IO38_IO49<<MSC | 1<<IE | 0<<OE | 0<<PU | 0<<PD | 7<<DS | 1<<ST ) // UART0_RXD
+		(IO40) ( 2<<SEL | 0<<SL | BANK_VOLTAGE_IO38_IO49<<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 7<<DS | 1<<ST )	// I2C1_SCL
+		(IO41) ( 2<<SEL | 0<<SL | BANK_VOLTAGE_IO38_IO49<<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 7<<DS | 1<<ST ) // I2C1_SDA
+		(IO42) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO38_IO49<<MSC | 1<<IE | 1<<OE | 0<<PU | 0<<PD | 7<<DS | 1<<ST ) // GPIO_42
+		(IO43) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO38_IO49<<MSC | 1<<IE | 1<<OE | 0<<PU | 0<<PD | 7<<DS | 1<<ST ) // GPIO_43
+		(IO44) ( 2<<SEL | 0<<SL | BANK_VOLTAGE_IO38_IO49<<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 8<<DS | 1<<ST )	// I2C3_SCL
+		(IO45) ( 2<<SEL | 0<<SL | BANK_VOLTAGE_IO38_IO49<<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 8<<DS | 1<<ST ) // I2C3_SDA
+		(IO46) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO38_IO49<<MSC | 1<<IE | 1<<OE | 0<<PU | 0<<PD | 7<<DS | 1<<ST ) // GPIO46
+		(IO47) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO38_IO49<<MSC | 1<<IE | 1<<OE | 0<<PU | 0<<PD | 7<<DS | 1<<ST ) // GPIO47
+		(IO48) ( 3<<SEL | 0<<SL | BANK_VOLTAGE_IO38_IO49<<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 7<<DS | 1<<ST ) // I2C0_SCL
+		(IO49) ( 3<<SEL | 0<<SL | BANK_VOLTAGE_IO38_IO49<<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 7<<DS | 1<<ST ) // I2C0_SDA
+
+		(IO50) ( 1<<SEL | 0<<SL | BANK_VOLTAGE_IO50_IO61<<MSC | 0<<IE | 1<<OE | 0<<PU | 0<<PD | 7<<DS | 1<<ST )	// UART3_TXD
+		(IO51) ( 1<<SEL | 0<<SL | BANK_VOLTAGE_IO50_IO61<<MSC | 1<<IE | 0<<OE | 0<<PU | 0<<PD | 7<<DS | 1<<ST ) // UART3_RXD
+		(IO52) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO50_IO61<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO53) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO50_IO61<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO54) ( 2<<SEL | 0<<SL | BANK_VOLTAGE_IO50_IO61<<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 7<<DS | 1<<ST ) // MMC1_CMD
+		(IO55) ( 2<<SEL | 0<<SL | BANK_VOLTAGE_IO50_IO61<<MSC | 0<<IE | 1<<OE | 0<<PU | 0<<PD | 7<<DS | 1<<ST ) // MMC1_CLK
+		(IO56) ( 2<<SEL | 0<<SL | BANK_VOLTAGE_IO50_IO61<<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 7<<DS | 1<<ST ) // MMC1_D0
+		(IO57) ( 2<<SEL | 0<<SL | BANK_VOLTAGE_IO50_IO61<<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 7<<DS | 1<<ST ) // MMC1_D1
+		(IO58) ( 2<<SEL | 0<<SL | BANK_VOLTAGE_IO50_IO61<<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 7<<DS | 1<<ST ) // MMC1_D2
+		(IO59) ( 2<<SEL | 0<<SL | BANK_VOLTAGE_IO50_IO61<<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 7<<DS | 1<<ST ) // MMC1_D3
+		(IO60) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO50_IO61<<MSC | 0<<IE | 1<<OE | 0<<PU | 0<<PD | 7<<DS | 1<<ST ) // WIFI_REGON
+		(IO61) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO50_IO61<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+
+		(IO62) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO62_IO63<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		(IO63) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO62_IO63<<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )	// NC
+		>;
+	};
+};
