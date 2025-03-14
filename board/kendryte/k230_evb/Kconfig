@@ -19,10 +19,16 @@ if TARGET_K230_EVB
     choice DDR_TYPE_AND_FREQ
         prompt "DDR Type And Frequency"
         default EVB_LPDDR3_2133
-    
+
         config EVB_LPDDR3_2133
             bool "k230 evb lpddr3 2133"
-    
+
+        config EVB_LPDDR3_800
+            bool "k230 evb lpddr3 800"
+
+        config EVB_LPDDR3_1600
+            bool "k230 evb lpddr3 1600"
+
         config EVB_K230D_SIP_LPDDR4_2667
             bool "SiP LPDDR4@2667"
     endchoice

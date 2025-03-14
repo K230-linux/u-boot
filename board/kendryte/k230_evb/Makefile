@@ -24,11 +24,22 @@
 #  */
 
 BOARD_COMMON_DIR = $(srctree)/board/$(VENDOR)/common
-EXTRA_CFLAGS += -I$(BOARD_COMMON_DIR)
+EXTRA_CFLAGS += -I$(BOARD_COMMON_DIR)  -Wno-error=date-time
 
 obj-y += board.o
 
 obj-$(CONFIG_EVB_LPDDR3_2133) += gen_ddr_init_2133.lex.o
 
 $(obj)/gen_ddr_init_2133.lex.c: $(src)/ddr_init_2133.c   $(BOARD_COMMON_DIR)/ddr.sh
+	$(Q)($(BOARD_COMMON_DIR)/ddr.sh $< $@ 0x50000 0x53fff 0x54000 0x54359 || exit 1)
+
+obj-$(CONFIG_EVB_LPDDR3_800) += gen_ddr_init_800.lex.o
+
+$(obj)/gen_ddr_init_800.lex.c: $(src)/lpddr3_swap_800_phyodt0_dramodt0_pverf50.c   $(BOARD_COMMON_DIR)/ddr.sh
+	$(Q)($(BOARD_COMMON_DIR)/ddr.sh $< $@ 0x50000 0x53fff 0x54000 0x54359 || exit 1)
+
+
+obj-$(CONFIG_EVB_LPDDR3_1600) += gen_ddr_init_1600.lex.o
+
+$(obj)/gen_ddr_init_1600.lex.c: $(src)/lpddr3_swap_1600.c   $(BOARD_COMMON_DIR)/ddr.sh
 	$(Q)($(BOARD_COMMON_DIR)/ddr.sh $< $@ 0x50000 0x53fff 0x54000 0x54359 || exit 1)
