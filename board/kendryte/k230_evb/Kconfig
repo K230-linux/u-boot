@@ -32,6 +32,9 @@ if TARGET_K230_EVB
         config EVB_LPDDR4_1066
             bool "k230 evb lpddr4 1066"
 
+        config EVB_LPDDR4_1066_WITHOUT_ODT
+            bool "k230 evb lpddr4 1066 without odt"
+
         config EVB_LPDDR4_2667
             bool "k230 evb lpddr4 2667"
 
