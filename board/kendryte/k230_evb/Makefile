@@ -28,18 +28,26 @@ EXTRA_CFLAGS += -I$(BOARD_COMMON_DIR)  -Wno-error=date-time
 
 obj-y += board.o
 
-obj-$(CONFIG_EVB_LPDDR3_2133) += gen_ddr_init_2133.lex.o
-
-$(obj)/gen_ddr_init_2133.lex.c: $(src)/ddr_init_2133.c   $(BOARD_COMMON_DIR)/ddr.sh
+obj-$(CONFIG_EVB_LPDDR3_800) += gen_lpddr3_32_swap_800.lex.o
+$(obj)/gen_lpddr3_32_swap_800.lex.c: $(src)/lpddr3_32_swap_800.c $(BOARD_COMMON_DIR)/ddr.sh
 	$(Q)($(BOARD_COMMON_DIR)/ddr.sh $< $@ 0x50000 0x53fff 0x54000 0x54359 || exit 1)
 
-obj-$(CONFIG_EVB_LPDDR3_800) += gen_ddr_init_800.lex.o
-
-$(obj)/gen_ddr_init_800.lex.c: $(src)/lpddr3_swap_800_phyodt0_dramodt0_pverf50.c   $(BOARD_COMMON_DIR)/ddr.sh
+obj-$(CONFIG_EVB_LPDDR3_1600) += gen_lpddr3_32_swap_1600.lex.o
+$(obj)/gen_lpddr3_32_swap_1600.lex.c: $(src)/lpddr3_32_swap_1600.c $(BOARD_COMMON_DIR)/ddr.sh
 	$(Q)($(BOARD_COMMON_DIR)/ddr.sh $< $@ 0x50000 0x53fff 0x54000 0x54359 || exit 1)
 
-
-obj-$(CONFIG_EVB_LPDDR3_1600) += gen_ddr_init_1600.lex.o
-
-$(obj)/gen_ddr_init_1600.lex.c: $(src)/lpddr3_swap_1600.c   $(BOARD_COMMON_DIR)/ddr.sh
+obj-$(CONFIG_EVB_LPDDR3_2133) += gen_lpddr3_32_swap_2133.lex.o
+$(obj)/gen_lpddr3_32_swap_2133.lex.c: $(src)/lpddr3_32_swap_2133.c $(BOARD_COMMON_DIR)/ddr.sh
 	$(Q)($(BOARD_COMMON_DIR)/ddr.sh $< $@ 0x50000 0x53fff 0x54000 0x54359 || exit 1)
+
+obj-$(CONFIG_EVB_LPDDR4_1066) += lpddr4_32_swap_1066.lex.o
+$(obj)/lpddr4_32_swap_1066.lex.c: $(src)/lpddr4_32_swap_1066.c $(BOARD_COMMON_DIR)/ddr.sh
+	$(Q)($(BOARD_COMMON_DIR)/ddr.sh $< $@ 0x50000 0x53fff 0x54000 0x5433d || exit 1)
+
+obj-$(CONFIG_EVB_LPDDR4_2667) += gen_lpddr4_32_swap_2667.lex.o
+$(obj)/gen_lpddr4_32_swap_2667.lex.c: $(src)/lpddr4_32_swap_2667.c $(BOARD_COMMON_DIR)/ddr.sh
+	$(Q)($(BOARD_COMMON_DIR)/ddr.sh $< $@ 0x50000 0x53fff 0x54000 0x5433d || exit 1)
+
+obj-$(CONFIG_EVB_LPDDR4_3200) += gen_lpddr4_32_swap_3200.lex.o
+$(obj)/gen_lpddr4_32_swap_3200.lex.c: $(src)/lpddr4_32_swap_3200.c $(BOARD_COMMON_DIR)/ddr_2d.sh
+	$(Q)($(BOARD_COMMON_DIR)/ddr_2d.sh $< $@ 0x50000 0x53fff 0x54000 0x5433d  0x542bd || exit 1)

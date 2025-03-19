@@ -46,6 +46,8 @@ void board_ddr_init(void)
 int data;
 int train_data=0;
 
+printf("ddr 1600, date %s %s\n", __DATE__, __TIME__);
+
   reg_read (0x91100060,data);
   data =data & 0xfffffffc;
   data =data | 0x400;

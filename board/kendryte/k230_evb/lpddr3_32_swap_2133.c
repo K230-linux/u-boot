@@ -43,6 +43,8 @@ void board_ddr_init(void)
 int data;
 int train_data=0;
 
+printf("ddr 2133, date %s %s\n", __DATE__, __TIME__);
+
 reg_write( DDR_REG_BASE + 0x00000304 , 0x00000001 );
 reg_write( DDR_REG_BASE + 0x00000030 , 0x00000001 );
 reg_read ( DDR_REG_BASE + 0x00000004 ,  data);
