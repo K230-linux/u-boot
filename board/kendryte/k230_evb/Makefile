@@ -24,7 +24,7 @@
 #  */
 
 BOARD_COMMON_DIR = $(srctree)/board/$(VENDOR)/common
-EXTRA_CFLAGS += -I$(BOARD_COMMON_DIR)  -Wno-error=date-time
+EXTRA_CFLAGS += -I$(BOARD_COMMON_DIR) -Wno-error=date-time
 
 obj-y += board.o
 

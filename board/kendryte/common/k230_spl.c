@@ -36,6 +36,8 @@
 #include <lmb.h>
 #include <stdio.h>
 
+#include <spi_flash.h>
+
 #include "board_common.h"
 
 #ifndef CONFIG_UBOOT_SPL_BOOT_IMG_TYPE
@@ -56,6 +58,17 @@ void board_boot_order(u32 *spl_boot_list) {
     spl_boot_list[0] = BOOT_DEVICE_MMC2;
     // spl_boot_list[1] = BOOT_DEVICE_MMC1;
   }
+}
+
+unsigned int spl_spi_get_uboot_offs(struct spi_flash *flash)
+{
+  if(BOOT_MEDIUM_NORFLASH == g_boot_medium) {
+    return UBOOT_SYS_IN_SPI_NOR_OFF;
+  } else if(BOOT_MEDIUM_NANDFLASH == g_boot_medium) {
+    return UBOOT_SYS_IN_SPI_NAND_OFF;
+  }
+
+  return UBOOT_SYS_IN_SPI_NOR_OFF;
 }
 
 void spl_board_prepare_for_boot(void) {

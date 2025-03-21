@@ -68,6 +68,10 @@ static ulong spl_spi_fit_read(struct spl_load_info *load, ulong sector,
 
 unsigned int __weak spl_spi_get_uboot_offs(struct spi_flash *flash)
 {
+#ifndef CONFIG_SYS_SPI_U_BOOT_OFFS
+	#define CONFIG_SYS_SPI_U_BOOT_OFFS 0
+#endif
+
 	return CONFIG_SYS_SPI_U_BOOT_OFFS;
 }
 
