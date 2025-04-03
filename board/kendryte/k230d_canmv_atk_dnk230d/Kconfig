@@ -22,6 +22,8 @@ if TARGET_K230D_CANMV_ATK_DNK230D
 
         config K230D_SIP_LPDDR4_1600
             bool "SiP LPDDR4@1600"
+        config K230D_SIP_LPDDR4_1600_NODT
+            bool "SiP LPDDR4@1600 nodt"
         config K230D_SIP_LPDDR4_2667
             bool "SiP LPDDR4@2667"
         config K230D_SIP_LPDDR4_3200_ALLODT
