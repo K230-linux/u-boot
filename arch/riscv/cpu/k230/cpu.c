@@ -95,5 +95,7 @@ void harts_early_init(void)
 	csr_write(pmpcfg0, 0x9999);
 #endif // CONFIG_KBURN_OTP
 
+	writel(0x2, (volatile void __iomem *)0x91301e8c);
+
 	improving_cpu_performance();
 }
