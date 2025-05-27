@@ -111,12 +111,14 @@ static int k230_boot_reset_big_hard_and_run(ulong core_run_addr)
 
 unsigned long k230_get_encrypted_image_load_addr(void)
 {
-    return CONFIG_MEM_BASE_ADDR + CONFIG_MEM_TOTAL_SIZE - (CONFIG_MEM_TOTAL_SIZE / 3);
+    unsigned long addr = CONFIG_MEM_BASE_ADDR + CONFIG_MEM_TOTAL_SIZE - (CONFIG_MEM_TOTAL_SIZE / 3);
+    return addr & ~(4096-1);
 }
 
 unsigned long k230_get_encrypted_image_decrypt_addr(void)
 {
-    return CONFIG_MEM_BASE_ADDR + CONFIG_MEM_TOTAL_SIZE - ((CONFIG_MEM_TOTAL_SIZE / 3) * 2);
+    unsigned long addr = CONFIG_MEM_BASE_ADDR + CONFIG_MEM_TOTAL_SIZE - ((CONFIG_MEM_TOTAL_SIZE / 3) * 2);
+    return addr & ~(4096-1);
 }
 
 static int k230_boot_decomp_to_load_addr(image_header_t* pUh, ulong des_len, ulong data, ulong* plen)
@@ -380,7 +382,7 @@ static int k230_load_sys_from_spi_nand(en_boot_sys_t sys, ulong buff)
 #if 0
     printf("firmware header:\n");
     for (size_t i = 0; i < sizeof(*pfh); i++) {
-        printf("%02X ", ((uint8_t*)buf)[i]);
+        printf("%02x ", buf[i]);
 
         if (15 == (i % 16)) {
             printf("\n");

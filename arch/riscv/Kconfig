@@ -45,6 +45,7 @@ config TARGET_K230_CANMV_01STUDIO
 
 config TARGET_K230D_CANMV_BPI_ZERO
 	bool "Support k230D_CANMV(BPI-ZERO)"
+	select DDR_K230D
 	select SYS_CACHE_SHIFT_6
 
 config TARGET_K230_CANMV_DONGSHANPI
@@ -61,6 +62,7 @@ config TARGET_K230_AIHARDWARE
 
 config TARGET_K230D_CANMV_ATK_DNK230D
 	bool "Support k230D_CANMV(ATK-DNK230D)"
+	select DDR_K230D
 	select SYS_CACHE_SHIFT_6
 
 config TARGET_K230_EVB
@@ -69,6 +71,7 @@ config TARGET_K230_EVB
 
 config TARGET_K230D_CANMV_LABPLUS_AI_CAMERA
 	bool "Support K230D_CANMV(LabPlusAiCamera)"
+	select DDR_K230D
 	select SYS_CACHE_SHIFT_6
 
 config TARGET_K230_LABPLUS_1956
@@ -109,6 +112,8 @@ source "board/sifive/unleashed/Kconfig"
 source "board/sifive/unmatched/Kconfig"
 source "board/openpiton/riscv64/Kconfig"
 source "board/sipeed/maix/Kconfig"
+
+source "board/kendryte/common/k230d/Kconfig"
 
 source "board/kendryte/k230_burntool/Kconfig"
 source "board/kendryte/k230_canmv/Kconfig"
