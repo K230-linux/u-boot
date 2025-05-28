@@ -62,8 +62,8 @@
 		pinctrl-single,pins = <
 
 		// NC
-		(IO0 ) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO0_IO1 <<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )
-		(IO1 ) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO0_IO1 <<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )
+		(IO0 ) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO0_IO1 <<MSC | 1<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )
+		(IO1 ) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO0_IO1 <<MSC | 1<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )
 
 		// NC
 		(IO2 ) ( 0<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 0<<IE | 0<<OE | 0<<PU | 0<<PD | 0<<DS | 0<<ST )
