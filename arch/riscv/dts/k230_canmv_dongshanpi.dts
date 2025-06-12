@@ -68,6 +68,11 @@
 		u-boot,dm-pre-reloc;
 		pinctrl-single,pins = <
 
+		// boot
+		(IO0 ) ( 1<<SEL | 0<<SL | BANK_VOLTAGE_IO0_IO1 <<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 2<<DS | 0<<ST )
+		// boot1
+		(IO1 ) ( 1<<SEL | 0<<SL | BANK_VOLTAGE_IO0_IO1 <<MSC | 1<<IE | 1<<OE | 1<<PU | 0<<PD | 2<<DS | 0<<ST )
+
 		// JTAG -> J5
 		(IO2 ) ( 1<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 1<<IE | 0<<OE | 0<<PU | 1<<PD | 4<<DS | 1<<ST )
 		(IO3 ) ( 1<<SEL | 0<<SL | BANK_VOLTAGE_IO2_IO13 <<MSC | 1<<IE | 0<<OE | 0<<PU | 0<<PD | 4<<DS | 0<<ST )
