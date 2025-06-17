@@ -513,6 +513,13 @@ config MMC_SDHCI_SNPS
 	help
 		Snps sdhci.
 
+if MMC_SDHCI_SNPS
+	config MMC_AUTO_DETECT_VOLTAGE
+	bool "SNPNS SDHCI controller Auto-Detect Voltage for K230"
+	depends on KENDRYTE_K230
+
+endif
+
 config MMC_SDHCI_ATMEL
 	bool "Atmel SDHCI controller support"
 	depends on ARCH_AT91

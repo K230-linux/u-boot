@@ -77,6 +77,7 @@ struct snps_sdhci_plat {
 
 static void dwcmshc_phy_pad_config(struct sdhci_host *host)
 {
+	u8 is_1p8v = 0;
 	u16 clk_ctrl;
 
 	/* Disable the card clock */
@@ -84,7 +85,25 @@ static void dwcmshc_phy_pad_config(struct sdhci_host *host)
 	clk_ctrl &= ~SDHCI_CLOCK_CARD_EN;
 	sdhci_writew(host, clk_ctrl, SDHCI_CLOCK_CONTROL);
 
-	if (!dev_read_bool(host->mmc->dev, "1-8-v"))
+	#if defined (CONFIG_MMC_AUTO_DETECT_VOLTAGE)
+		if((void *)0x91580000 == host->ioaddr) {
+			uint32_t cfg_data = readl((const volatile void __iomem *)0x91213410UL);
+			uint32_t cfg = cpu_to_be32(cfg_data);
+
+			if((0x01 == (cfg & 0x01)) && (0x02 == (cfg & 0x02))) {
+
+			} else {
+				is_1p8v = 1;
+			}
+		}
+	#else
+		if(dev_read_bool(host->mmc->dev, "1-8-v")) {
+			is_1p8v = 1;
+		}
+	#endif // CONFIG_MMC_AUTO_DETECT_VOLTAGE
+
+	// if (!dev_read_bool(host->mmc->dev, "1-8-v"))
+	if (0x00 == is_1p8v)
 	{
 		sdhci_writew(host, DWC_MSHC_PHY_PAD_SD_DAT, DWC_MSHC_CMDPAD_CNFG);
 		sdhci_writew(host, DWC_MSHC_PHY_PAD_SD_DAT, DWC_MSHC_DATPAD_CNFG);
